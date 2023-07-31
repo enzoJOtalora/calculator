@@ -1,0 +1,30 @@
+header{
+    text-align: center;
+}
+.button-grid{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-gap: 5px;
+}
+.grid-element{
+    border-radius: 5px;
+}
+.calculator-wrapper{
+    border: 3px solid black;
+    border-radius: 5px;
+    width: 800px;
+    padding: 10px;
+    margin: auto;
+}
+.display{
+    border: 2px solid black;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: end;
+}
+.display > p {
+    margin: 5px 5px 5px 0;
+}
+
