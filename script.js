@@ -39,9 +39,60 @@ function power(a,b){
 function handleOperand(){
     operands.forEach(item => {
         item.addEventListener('click',(e)=>{
-            firstNumber=firstNumber+e.target.innerText;
-            input.textContent=firstNumber;
+            if(operator===''){
+                firstNumber=firstNumber+e.target.innerText;
+                input.textContent=firstNumber;
+            } else {
+                secondNumber+=e.target.innerText;
+                input.textContent=secondNumber;
+            }
         })
     });
 }
+
+function handleOperator(){
+    let operation = '';
+    operators.forEach(item => {
+        item.addEventListener('click',(e)=>{
+            if(secondNumber===''&&e.target.innerText!='='){
+                operator=e.target.innerText;
+                input.textContent=firstNumber+operator;
+            } else if (e.target.innerText==="="){
+                operate(parseFloat(firstNumber),parseFloat(secondNumber),operator);
+            } else {
+                operate(parseFloat(firstNumber),parseFloat(secondNumber),operator);
+                firstNumber=ans;
+                secondNumber='';
+                operator=e.target.innerText;
+                input.textContent=firstNumber+operator;
+            }
+        })
+    });
+}
+
+function operate(a,b,operator){
+    switch (operator){
+        case '+':
+            ans=addition(a,b);
+            break;
+        case '-':
+            ans=substraction(a,b);
+            break;
+        case '*':
+            ans=multiplication(a,b);
+            break;
+        case '/':
+            ans=division(a,b);
+            break;
+        case '^':
+            ans=power(a,b);
+            break;
+    }
+    output.textContent=ans;
+    firstNumber = '';
+    operator = '';
+    secondNumber = '';
+}
+
 handleOperand()
+handleOperator()
