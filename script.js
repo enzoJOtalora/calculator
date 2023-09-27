@@ -2,6 +2,9 @@ let ans = 0;
 let firstNumber = '';
 let operator = '';
 let secondNumber = '';
+let answerExists = true;
+let operations = ['+','-','*','/'];
+let result=42;
 
 const operands = document.querySelectorAll(".operand");
 const operators = document.querySelectorAll(".operator");
@@ -39,36 +42,38 @@ function power(a,b){
 function handleOperand(){
     operands.forEach(item => {
         item.addEventListener('click',(e)=>{
-            if(operator===''){
-                firstNumber=firstNumber+e.target.innerText;
-                input.textContent=firstNumber;
-            } else {
-                secondNumber+=e.target.innerText;
-                input.textContent=secondNumber;
+            if(answerExists&&!input.textContent.includes("Ans")){
+                input.textContent='';
+                answerExists=false;
             }
+            input.textContent+=e.target.textContent;
         })
     });
 }
 
 function handleOperator(){
-    let operation = '';
     operators.forEach(item => {
         item.addEventListener('click',(e)=>{
-            if(secondNumber===''&&e.target.innerText!='='){
-                operator=e.target.innerText;
-                input.textContent=firstNumber+operator;
-            } else if (e.target.innerText==="="){
-                operate(parseFloat(firstNumber),parseFloat(secondNumber),operator);
-            } else {
-                operate(parseFloat(firstNumber),parseFloat(secondNumber),operator);
-                firstNumber=ans;
-                secondNumber='';
-                operator=e.target.innerText;
-                input.textContent=firstNumber+operator;
+            console.log(e.target.textContent);
+            if(answerExists){
+                input.textContent='Ans';
             }
+            else if(e.target.textContent==='='){
+                /* evaluate */
+                output.textContent='43';
+                answerExists=true;
+            } else if(input.textContent.split('').some(r=> operations.includes(r))){
+                /* evaluate */
+                console.log(input.textContent);
+                output.textContent='42' //DUMMY RESULT
+                answerExists=true;
+            }
+            input.textContent+=e.target.textContent;
         })
     });
 }
+
+
 
 function operate(a,b,operator){
     switch (operator){
@@ -87,11 +92,20 @@ function operate(a,b,operator){
         case '^':
             ans=power(a,b);
             break;
+        default:
+            ans=a;
     }
     output.textContent=ans;
     firstNumber = '';
     operator = '';
     secondNumber = '';
+}
+
+function clearTop(){
+    input.textContent='';
+    firstNumber ='';
+    secondNumber='';
+    operator='';
 }
 
 handleOperand()
