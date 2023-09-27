@@ -42,7 +42,7 @@ function power(a,b){
 function handleOperand(){
     operands.forEach(item => {
         item.addEventListener('click',(e)=>{
-            if(answerExists&&!input.textContent.includes("Ans")){
+            if(answerExists){
                 input.textContent='';
                 answerExists=false;
             }
@@ -57,18 +57,23 @@ function handleOperator(){
             console.log(e.target.textContent);
             if(answerExists){
                 input.textContent='Ans';
+                answerExists=false;
+                input.textContent+=e.target.textContent;
             }
             else if(e.target.textContent==='='){
                 /* evaluate */
                 output.textContent='43';
                 answerExists=true;
+                
             } else if(input.textContent.split('').some(r=> operations.includes(r))){
                 /* evaluate */
                 console.log(input.textContent);
+                input.textContent='Ans';
                 output.textContent='42' //DUMMY RESULT
                 answerExists=true;
+            } else {
+                input.textContent+=e.target.textContent;
             }
-            input.textContent+=e.target.textContent;
         })
     });
 }
