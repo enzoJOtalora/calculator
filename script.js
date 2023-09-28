@@ -25,8 +25,13 @@ function multiplication (a,b) {
     return Math.round(result * 1000) / 1000
 }
 function division (a,b){
+    if(b==0){
+        input.textContent='0';
+        return 'Can\'t divide by zero!';
+    } else {
     let result = a/b;
     return Math.round(result * 1000) / 1000
+    }
 }
 
 function power(a,b){
@@ -129,6 +134,8 @@ function clear(){
             input.textContent = input.textContent.slice(0, -1);
             if(input.textContent==''||input.textContent=='Ans'){
                 input.textContent='0';
+            } else {
+                answerExists=false;
             }
         }
     })
