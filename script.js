@@ -55,30 +55,44 @@ function handleOperator(){
     operators.forEach(item => {
         item.addEventListener('click',(e)=>{
             console.log(e.target.textContent);
-            if(answerExists){
+            if(answerExists){                       //expresión -> "=" -> operador
                 input.textContent='Ans';
                 answerExists=false;
                 input.textContent+=e.target.textContent;
             }
-            else if(e.target.textContent==='='){
+            else if(e.target.textContent==='='){ //expresión -> "=" en cualquier momento
                 /* evaluate */
-                output.textContent='43';
+                evalInput();
+                //output.textContent='43';
                 answerExists=true;
                 
-            } else if(input.textContent.split('').some(r=> operations.includes(r))){
-                /* evaluate */
+            } else if(input.textContent.split('').some(r=> operations.includes(r))){ //expresión -> operador
+                evalInput();
                 console.log(input.textContent);
-                input.textContent='Ans';
-                output.textContent='42' //DUMMY RESULT
+                input.textContent='Ans'+e.target.textContent;
+                //output.textContent='42' //DUMMY RESULT
                 answerExists=true;
             } else {
-                input.textContent+=e.target.textContent;
+                input.textContent+=e.target.textContent; //expresión incompleta
             }
         })
     });
 }
 
-
+function evalInput(){
+    let a = 0;
+    let b = 0;
+    let operator = input.textContent[input.textContent.search(/\+|\-|\*|\//)];
+    let inputString = input.textContent.split(/\+|\-|\*|\//);
+    console.log(inputString);
+    if(input.textContent.includes("Ans")){
+        a = parseFloat(output.textContent);
+    } else {
+        a = parseFloat(inputString[0]);
+    }
+        b = parseFloat(inputString[1]);
+        operate(a,b,operator);
+}
 
 function operate(a,b,operator){
     switch (operator){
@@ -101,9 +115,6 @@ function operate(a,b,operator){
             ans=a;
     }
     output.textContent=ans;
-    firstNumber = '';
-    operator = '';
-    secondNumber = '';
 }
 
 function clearTop(){
