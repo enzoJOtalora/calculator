@@ -127,7 +127,7 @@ function clear(){
     clearOne.addEventListener('click',()=>{
         if(input.textContent!='0'){
             input.textContent = input.textContent.slice(0, -1);
-            if(input.textContent==''){
+            if(input.textContent==''||input.textContent=='Ans'){
                 input.textContent='0';
             }
         }
