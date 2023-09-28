@@ -9,6 +9,8 @@ let result=42;
 const operands = document.querySelectorAll(".operand");
 const operators = document.querySelectorAll(".operator");
 const floatPoint = document.querySelectorAll(".floatingPoint");
+const clearOne = document.querySelector("#clear-one");
+const clearAll = document.querySelector("#clear-all");
 const input = document.getElementById("input");
 const output = document.getElementById("output");
 
@@ -90,7 +92,11 @@ function evalInput(){
     } else {
         a = parseFloat(inputString[0]);
     }
-        b = parseFloat(inputString[1]);
+        if(inputString[1]===''){
+        b = a;
+        } else {
+            b = parseFloat(inputString[1]);
+        }
         operate(a,b,operator);
 }
 
@@ -117,12 +123,27 @@ function operate(a,b,operator){
     output.textContent=ans;
 }
 
-function clearTop(){
-    input.textContent='';
-    firstNumber ='';
-    secondNumber='';
-    operator='';
+function clear(){
+    clearOne.addEventListener('click',()=>{
+        if(input.textContent!='0'){
+            input.textContent = input.textContent.slice(0, -1);
+            if(input.textContent==''){
+                input.textContent='0';
+            }
+        }
+    })
 }
+
+function clearFields(){
+    clearAll.addEventListener('click',()=>{
+        input.textContent='0';
+        output.textContent='0';
+        answerExists=true;
+    })
+}
+
 
 handleOperand()
 handleOperator()
+clear()
+clearFields()
